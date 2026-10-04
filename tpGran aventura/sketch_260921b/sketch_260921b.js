@@ -19,7 +19,7 @@ let textoActual;
 let musicaFondo;
 
 function preload() {
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 12; i++) {
     fondos[i] = loadImage("assets/pantalla" + i + ".jpg");
   }
   imagenBoton = loadImage("assets/boton.png");
@@ -48,7 +48,7 @@ function setup() {
   texto[5] = 'Luego de analizar la escena del crimen y reconocer que fue producto de un orangután, publicó un anuncio en el periódico donde dice haber capturado un orangután y da una recompensa por su devolución.';
 
   texto[6] = 'Dupin repara en que ningún testigo coincide en qué idioma hablaba el asesino. Esa contradicción lo lleva a sospechar de algo no humano.';
-  texto[7] = 'Todas las miradas están puestas en Le Bon, mientras las demás pruebas quedan enterradas bajo la acusación fácil.\nNotas las inconsistencias';
+  texto[7] = 'Todas las miradas están puestas en Le Bon, mientras las demás pruebas quedan enterradas bajo la acusación fácil.\n¿Notas las inconsistencias?';
   texto[8] = 'El marinero atraído por el anuncio, se presenta ante Dupin antes de que la policía conecte los hechos por su cuenta.';
 
   // Final heroico
@@ -83,6 +83,16 @@ function draw() {
   if (pantalla == 5){
     boton(320,380,180,40,"Avanzar");
   }
+  if (pantalla == 6){
+    boton(320, 380, 180, 40, "Avanzar");
+  }
+  if (pantalla == 7){
+    boton(200, 380, 180, 40, "Sí");
+    boton(400, 380, 180, 40, "No");  
+  }
+  if (pantalla == 8){
+    boton(320, 380, 180, 40, "Avanzar");
+  }
 }
 
 function mousePressed() {
@@ -90,6 +100,7 @@ function mousePressed() {
     if (areaDelBoton(320, 380, 180, 40)) {
       pantalla++;
     }
+  // Decide cómo investigar
   } else if (pantalla == 2) {
     // Acusar a Le Bon
     if (areaDelBoton(100, 380, 180, 40)) {
@@ -102,6 +113,45 @@ function mousePressed() {
     // Anuncio en el diario
     if (areaDelBoton(520,380,280,40)){
       pantalla = 5;
+    }
+  // Seguir investigando por tu cuenta
+  } else if (pantalla == 3) {
+    // sí
+    if (areaDelBoton(200,380,180, 40)){
+      pantalla = 6;
+    }
+    // no
+    if (areaDelBoton(400, 380, 180, 40)){
+      pantalla = 7;
+    }
+  // Ruta marinero
+  }else if (pantalla == 4) {
+    if (areaDelBoton(400, 380, 180, 40)){
+      pantalla = 7;
+    }
+  // notas las inconsistencias
+  }else if (pantalla == 7) {
+    if (areaDelBoton(200,380,180, 40)){
+      pantalla = 6;
+    }
+    // FINAL TRÁGICO
+    if (areaDelBoton(400, 380, 180, 40)){
+      pantalla = 10;
+    }
+  // Ruta diario
+  } else if (pantalla == 5) {
+    if (areaDelBoton(320, 380, 180, 40)){
+      pantalla = 8;
+    }
+  // FINAL HEROICO
+  } else if (pantalla == 6) {
+    if (areaDelBoton(320, 380, 180, 40)){
+      pantalla = 9;
+    }
+  // FINAL CLÁSICO
+  } else if (pantalla == 8){
+    if (areaDelBoton(320, 380, 180, 40)){
+      pantalla = 11;
     }
   }
 }
