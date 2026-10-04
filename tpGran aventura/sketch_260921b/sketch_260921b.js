@@ -8,14 +8,7 @@ Video explicativo:
 let fondos = [];
 let texto = [];
 let imagenBoton;
-
 let pantalla = 0;
-
-let minTexto;
-let maxTexto;
-
-let textoActual;
-
 let musicaFondo;
 
 function preload() {
@@ -27,14 +20,7 @@ function preload() {
 
 function setup() {
   createCanvas(800, 450);
-  textSize(20);
-  textWrap(WORD);
-
-  minTexto = 0;
-  maxTexto = 0;
-
-  textoActual = 0;
-
+  
   // inicio
   texto[0] = 'Dupin y su amigo leen en el periódico sobre un asesinato doble.';
   texto[1] = 'Dupin consigue permiso para examinar la escena del crimen.';
