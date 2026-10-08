@@ -88,10 +88,10 @@ function draw() {
     boton(320, 380, 180, 40, "Avanzar");
   }
   if (pantalla == 11)
-  {if (millis() - tiempoFrameFinal3 >= 200) {
-  frame3++;
+  {if (millis() - tiempoFrameFinal3 >= 200) { //si pasan 200 milisegundos, cambiamos de frame desde el ultimo cambio
+  frame3++; // el frame se suma
 
-  if (frame3 >= 6) {
+  if (frame3 >= 6) { //se reinicia
     frame3 = 0;
   }
 
@@ -99,7 +99,7 @@ function draw() {
 }
   
 
-  if (millis() - tiempoPantalla11 >= 2000) {
+  if (millis() - tiempoPantalla11 >= 2000) {//2 segundo para mostrar el sprite
       posX = posX + 1;
     image(Final3[frame3], posX, 300, 100, 150);
   }
@@ -163,7 +163,7 @@ function mousePressed() {
   } else if (pantalla == 8){
     if (areaDelBoton(320, 380, 180, 40)){
       pantalla = 11;
-       tiempoPantalla11 = millis();
+       tiempoPantalla11 = millis(); // guardamos el momento que llegamos a la pantalla 11
        tiempoFrameFinal3 = millis();
     }
   }
