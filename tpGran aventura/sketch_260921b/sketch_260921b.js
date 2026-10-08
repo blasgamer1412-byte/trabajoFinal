@@ -10,12 +10,20 @@ let texto = [];
 let imagenBoton;
 let pantalla = 0;
 let musicaFondo;
+let Final3=[];
 
+//final 3
+let tiempoPantalla11 = 0;
+let frame3=0;
+let tiempoFrameFinal3 = 0;
+let posX=0;
 function preload() {
   for (let i = 0; i < 12; i++) {
     fondos[i] = loadImage("assets/pantalla" + i + ".jpg");
   }
   imagenBoton = loadImage("assets/boton.png");
+    for(let j=0;j<6;j++){
+ Final3[j]=loadImage("assets/final3/mono"+j+".png");}
 }
 
 function setup() {
@@ -79,6 +87,23 @@ function draw() {
   if (pantalla == 8){
     boton(320, 380, 180, 40, "Avanzar");
   }
+  if (pantalla == 11)
+  {if (millis() - tiempoFrameFinal3 >= 200) {
+  frame3++;
+
+  if (frame3 >= 6) {
+    frame3 = 0;
+  }
+
+  tiempoFrameFinal3 = millis();
+}
+  
+
+  if (millis() - tiempoPantalla11 >= 2000) {
+      posX = posX + 1;
+    image(Final3[frame3], posX, 300, 100, 150);
+  }
+}
 }
 
 function mousePressed() {
@@ -138,6 +163,8 @@ function mousePressed() {
   } else if (pantalla == 8){
     if (areaDelBoton(320, 380, 180, 40)){
       pantalla = 11;
+       tiempoPantalla11 = millis();
+       tiempoFrameFinal3 = millis();
     }
   }
 }
