@@ -10,6 +10,7 @@ let texto = [];
 let imagenBoton;
 let pantalla = -1;
 let musicaFondo;
+let sonidoBoton;
 let MovY=0;
 
 
@@ -21,14 +22,19 @@ let posX=-20;
 
 let tiempoInicioFinal = 0;
 let duracionFinal = 4000;
+
 function preload() {
   for (let i = 0; i < 13; i++) {
     fondos[i] = loadImage("assets/pantalla" + i + ".jpg");
   }
   imagenBoton = loadImage("assets/boton.png");
-   for(let j=0;j<9;j++){
- Final[j]=loadImage("assets/final3/mono"+j+".png");}
- imagenmenu= loadImage("assets/menu/menu.jpg");
+
+   for (let j = 0; j < 9; j++) {
+    Final[j] = loadImage("assets/final3/mono"+j+".png");
+}
+  imagenmenu= loadImage("assets/menu/menu.jpg");
+  musicaFondo = loadSound("assets/fondo.mp3");
+  sonidoBoton = loadSound("assets/boton.mp3");
 }
 
 function setup() {
@@ -51,11 +57,15 @@ function setup() {
   texto[8] = 'El marinero atraído por el anuncio, se presenta ante Dupin antes de que la policía conecte los hechos por su cuenta.';
 
   // Final heroico
-  texto[9] = 'La verdad se revela, un orangután escapado cometió los asesinatos. Le Bon es liberado y el marinero asume su responsabilidad por negligencia.';
+  texto[9] = 'La verdad se revela, un orangután escapado cometió los asesinatos. Le Bon es liberado y el marinero asume su responsabilidad por negligencia.\nFINAL HERÓICO';
   // Final trágico
-  texto[10] = 'Le Bon es condenado injustamente. El verdadero responsable nunca enfrenta las consecuencias, y la verdad no llega a saberse.';
+  texto[10] = 'Le Bon es condenado injustamente. El verdadero responsable nunca enfrenta las consecuencias, y la verdad no llega a saberse.\nFINAL TRÁGICO';
   // Final clásico
-  texto[11] = 'El marinero confiesa todo voluntariamente a Dupin. Capturan al animal sin que nadie más salga herido, y Le Bon queda libre de inmediato.';
+  texto[11] = 'El marinero confiesa todo voluntariamente a Dupin. Capturan al animal sin que nadie más salga herido, y Le Bon queda libre de inmediato.\nFINAL CLÁSICO';
+
+  musicaFondo.play();
+  musicaFondo.loop();
+
 }
 
 function draw() {
@@ -65,82 +75,74 @@ function draw() {
   if (pantalla == -1) {
     image(imagenmenu, 0, 0, 800, 450);
     push();
+    textAlign(CENTER, TOP);
     fill(255);
     textSize(28);
-    fill(255, 230, 180);
-    text("LOS CRÍMENES DE LA CALLE MORGUE", 150, 80);
+    text("LOS CRÍMENES DE LA CALLE MORGUE", 400, 80);
     pop();
 
     
     boton(310, 320, 180, 40, "Iniciar aventura");
-  } 
-  
-
-  else {
+  } else {
 
   image(fondos[pantalla], 0, 0, 800, 450);
-  
-  if (pantalla != 12) {
-  cajaTexto(texto[pantalla], 0, 290, 800, 300);
+
   }
   if (pantalla == 0 || pantalla == 1) {
+    cajaTexto(texto[pantalla], 0, 290, 800, 300);
     boton(320, 380, 180, 40, "Avanzar");
   }
   if (pantalla == 2){
+    cajaTexto(texto[pantalla], 0, 290, 800, 300);
     boton(100, 380, 180, 40, "Acusa a Le Bon");
     boton(310, 380, 180, 40, "Habla con el marinero");
     boton(520, 380, 180, 40,"Anuncio en el diario");
   }
   if (pantalla == 3){
+    cajaTexto(texto[pantalla], 0, 290, 800, 300);
     boton(200, 380, 180, 40, "Sí");
     boton(400, 380, 180, 40, "No");
   }
   if (pantalla == 4){
+    cajaTexto(texto[pantalla], 0, 290, 800, 300);
     boton(320,380,180,40,"Avanzar");
   }
   if (pantalla == 5){
+    cajaTexto(texto[pantalla], 0, 290, 800, 300);
     boton(320,380,180,40,"Avanzar");
   }
   if (pantalla == 6){
+    cajaTexto(texto[pantalla], 0, 290, 800, 300);
     boton(320, 380, 180, 40, "Avanzar");
   }
   if (pantalla == 7){
+    cajaTexto(texto[pantalla], 0, 290, 800, 300);
     boton(200, 380, 180, 40, "Sí");
-    boton(400, 380, 180, 40, "No");  
+    boton(400, 380, 180, 40, "No");
   }
   if (pantalla == 8){
+    cajaTexto(texto[pantalla], 0, 290, 800, 300);
     boton(320, 380, 180, 40, "Avanzar");
   }
- 
+  if (pantalla == 9 || pantalla == 10 || pantalla == 11){
+    cajaTexto(texto[pantalla], 0, 290, 800, 300);
+    boton(320, 380, 180, 40, "Créditos");
+  }
 
-  }
-  
-if (pantalla == 9 || pantalla == 10 || pantalla == 11) {
-  if (millis() - tiempoInicioFinal >= duracionFinal) {
-    pantalla = 12;
-     tiempoPantalla12 = millis();
-    tiempoFrameFinal = millis();
-    frame3 = 0;
-    posX = 0;
-    MovY = 0;
-  }
+  if (pantalla == 12){
+    fill(0, 0, 0, 130);
+    rect(0, 0, 800, 450);
+
+  if (MovY < 150) {
+    MovY = MovY + 0.5;
 }
-if(pantalla==12){
-  
-
- boton(600, 380, 180, 40, "volver a empezar");
- MovY=MovY+0.5;
- fill(255);
- textSize(20);
- text ("El autor del libro es Edgar Allan Poe\n" +
-    "La fecha de publicación fue en 1841\n" +
-    "El género del cuento es de misterio y policial",
-    200, MovY );
+    fill(255);
+    textAlign(CENTER, TOP);
+    textSize(20);
+    text ("ALUMNOS:\nCeleste Geraldine Agorreca\nBlas Romero\nLIBRO:\nLos crímenes de la calle Morgue\nde Edgar Allan Poe", 400, MovY );
     
- // Esperar 2 segundos antes de mostrar el mono
+ // Mostrar el orangután
   if (millis() - tiempoPantalla12 >= 2000) {
-
-    // Cambiar de imagen cada 200 milisegundos
     if (millis() - tiempoFrameFinal >= 200) {
       frame3++;
 
@@ -151,93 +153,105 @@ if(pantalla==12){
       tiempoFrameFinal = millis();
     }
 
-    // Dibujar el mono
-    image(Final[frame3], posX, 250, 150, 200);
-
-    // Mover el mono hacia la derecha
+    // Dibujar el orangután
+    image(Final[frame3], posX, 300, 150, 150);
     posX = posX +1;
+
+    boton(590, 380, 180, 40, "Volver a empezar");
   }
-}    
-    
 }
+}  
 
 
 function mousePressed() {
   if (pantalla == -1) {
-    if (areaDelBoton(310, 320, 180, 40)) {
+    if (areaDelBoton(310, 320, 180, 40)){
+      sonidoBoton.play();
       pantalla = 0;
     }
   } 
   
   else if (pantalla == 0 || pantalla == 1) {
     if (areaDelBoton(320, 380, 180, 40)) {
+      sonidoBoton.play();
       pantalla++;
     }
   // Decide cómo investigar
   } else if (pantalla == 2) {
     // Acusar a Le Bon
     if (areaDelBoton(100, 380, 180, 40)) {
+      sonidoBoton.play();
       pantalla = 3;
     }
     // Habla con el marinero
     if (areaDelBoton(310,380,180,40)){
+      sonidoBoton.play();
       pantalla = 4;
     }
     // Anuncio en el diario
-    if (areaDelBoton(520,380,280,40)){
+    if (areaDelBoton(520,380,180,40)){
+      sonidoBoton.play();
       pantalla = 5;
     }
   // Seguir investigando por tu cuenta
   } else if (pantalla == 3) {
     // sí
     if (areaDelBoton(200,380,180, 40)){
+      sonidoBoton.play();
       pantalla = 6;
     }
     // no
     if (areaDelBoton(400, 380, 180, 40)){
+      sonidoBoton.play();
       pantalla = 7;
     }
   // Ruta marinero
-  }else if (pantalla == 4) {
-    if (areaDelBoton(400, 380, 180, 40)){
+  } else if (pantalla == 4) {
+    if (areaDelBoton(320, 380, 180, 40)){
+      sonidoBoton.play();
       pantalla = 7;
     }
   // notas las inconsistencias
-  }else if (pantalla == 7) {
+  } else if (pantalla == 7) {
     if (areaDelBoton(200,380,180, 40)){
+      sonidoBoton.play();
       pantalla = 6;
     }
     // FINAL TRÁGICO
     if (areaDelBoton(400, 380, 180, 40)){
+      sonidoBoton.play();
       pantalla = 10;
-      tiempoInicioFinal = millis();
     }
   // Ruta diario
   } else if (pantalla == 5) {
     if (areaDelBoton(320, 380, 180, 40)){
+      sonidoBoton.play();
       pantalla = 8;
     }
   // FINAL HEROICO
   } else if (pantalla == 6) {
     if (areaDelBoton(320, 380, 180, 40)){
+      sonidoBoton.play();
       pantalla = 9;
-      tiempoInicioFinal = millis();
     }
   // FINAL CLÁSICO
   } else if (pantalla == 8){
     if (areaDelBoton(320, 380, 180, 40)){
+      sonidoBoton.play();
       pantalla = 11;
-      tiempoInicioFinal = millis();
-      
-    
    }
-  }
-  else if (pantalla==12){
-  if (areaDelBoton(600, 380, 180, 40)){
+  } else if (pantalla == 9 || pantalla == 10 || pantalla == 11){
+    if (areaDelBoton(320, 380, 180, 40)){
+      sonidoBoton.play();
+      pantalla = 12;
+    }
+  } else if (pantalla==12){
+  if (areaDelBoton(590, 380, 180, 40)){
+      sonidoBoton.play();
       pantalla = -1;
       MovY=0;
-}
-}
+    }
+  }
 }
 function areaDelBoton(x, y, w, h) {
   return mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h;
