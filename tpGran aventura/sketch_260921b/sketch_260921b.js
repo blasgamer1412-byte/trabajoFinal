@@ -1,7 +1,7 @@
 /*TP FINAL PARTE #1 COMISIÓN 2
 ALUMNOS:
 - Agorreca Celeste Geraldine 122576/5
-- Blas Romero
+- Blas Romero 125680/7
 Video explicativo:
 */
 let imagenmenu;
@@ -151,8 +151,9 @@ function draw() {
     }
 
     // Dibujar el orangután
+     posX = posX +1;
     image(Final[frame3], posX, 300, 150, 150);
-    posX = posX +1;
+   
 
     boton(590, 380, 180, 40, "Volver a empezar");
   }
@@ -247,6 +248,7 @@ function mousePressed() {
       sonidoBoton.play();
       pantalla = -1;
       MovY=0;
+      posX=-20;
     }
   }
 }
