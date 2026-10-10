@@ -18,10 +18,7 @@ let Final=[];
 let tiempoPantalla12 = 0;
 let frame3=0;
 let tiempoFrameFinal = 0;
-let posX=-20; 
-
-let tiempoInicioFinal = 0;
-let duracionFinal = 4000;
+let posX=-20;
 
 function preload() {
   for (let i = 0; i < 13; i++) {
