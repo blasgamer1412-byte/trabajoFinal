@@ -4,26 +4,31 @@ ALUMNOS:
 - Blas Romero
 Video explicativo:
 */
-
+let imagenmenu;
 let fondos = [];
 let texto = [];
 let imagenBoton;
-let pantalla = 0;
+let pantalla = -1;
 let musicaFondo;
-let Final3=[];
+let MovY=0;
 
-//final 3
-let tiempoPantalla11 = 0;
+
+let Final=[];
+let tiempoPantalla12 = 0;
 let frame3=0;
-let tiempoFrameFinal3 = 0;
-let posX=0;
+let tiempoFrameFinal = 0;
+let posX=-20; 
+
+let tiempoInicioFinal = 0;
+let duracionFinal = 4000;
 function preload() {
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 13; i++) {
     fondos[i] = loadImage("assets/pantalla" + i + ".jpg");
   }
   imagenBoton = loadImage("assets/boton.png");
-    for(let j=0;j<6;j++){
- Final3[j]=loadImage("assets/final3/mono"+j+".png");}
+   for(let j=0;j<9;j++){
+ Final[j]=loadImage("assets/final3/mono"+j+".png");}
+ imagenmenu= loadImage("assets/menu/menu.jpg");
 }
 
 function setup() {
@@ -55,10 +60,29 @@ function setup() {
 
 function draw() {
   background(0);
+  
+  
+  if (pantalla == -1) {
+    image(imagenmenu, 0, 0, 800, 450);
+    push();
+    fill(255);
+    textSize(28);
+    fill(255, 230, 180);
+    text("LOS CRÍMENES DE LA CALLE MORGUE", 150, 80);
+    pop();
+
+    
+    boton(310, 320, 180, 40, "Iniciar aventura");
+  } 
+  
+
+  else {
 
   image(fondos[pantalla], 0, 0, 800, 450);
+  
+  if (pantalla != 12) {
   cajaTexto(texto[pantalla], 0, 290, 800, 300);
-
+  }
   if (pantalla == 0 || pantalla == 1) {
     boton(320, 380, 180, 40, "Avanzar");
   }
@@ -87,27 +111,65 @@ function draw() {
   if (pantalla == 8){
     boton(320, 380, 180, 40, "Avanzar");
   }
-  if (pantalla == 11)
-  {if (millis() - tiempoFrameFinal3 >= 200) { //si pasan 200 milisegundos, cambiamos de frame desde el ultimo cambio
-  frame3++; // el frame se suma
+ 
 
-  if (frame3 >= 6) { //se reinicia
-    frame3 = 0;
   }
-
-  tiempoFrameFinal3 = millis();
+  
+if (pantalla == 9 || pantalla == 10 || pantalla == 11) {
+  if (millis() - tiempoInicioFinal >= duracionFinal) {
+    pantalla = 12;
+     tiempoPantalla12 = millis();
+    tiempoFrameFinal = millis();
+    frame3 = 0;
+    posX = 0;
+    MovY = 0;
+  }
 }
+if(pantalla==12){
   
 
-  if (millis() - tiempoPantalla11 >= 2000) {//2 segundo para mostrar el sprite
-      posX = posX + 1;
-    image(Final3[frame3], posX, 300, 100, 150);
+ boton(600, 380, 180, 40, "volver a empezar");
+ MovY=MovY+0.5;
+ fill(255);
+ textSize(20);
+ text ("El autor del libro es Edgar Allan Poe\n" +
+    "La fecha de publicación fue en 1841\n" +
+    "El género del cuento es de misterio y policial",
+    200, MovY );
+    
+ // Esperar 2 segundos antes de mostrar el mono
+  if (millis() - tiempoPantalla12 >= 2000) {
+
+    // Cambiar de imagen cada 200 milisegundos
+    if (millis() - tiempoFrameFinal >= 200) {
+      frame3++;
+
+      if (frame3 >= 9) {
+        frame3 = 0;
+      }
+
+      tiempoFrameFinal = millis();
+    }
+
+    // Dibujar el mono
+    image(Final[frame3], posX, 250, 150, 200);
+
+    // Mover el mono hacia la derecha
+    posX = posX +1;
   }
-}
+}    
+    
 }
 
+
 function mousePressed() {
-  if (pantalla == 0 || pantalla == 1) {
+  if (pantalla == -1) {
+    if (areaDelBoton(310, 320, 180, 40)) {
+      pantalla = 0;
+    }
+  } 
+  
+  else if (pantalla == 0 || pantalla == 1) {
     if (areaDelBoton(320, 380, 180, 40)) {
       pantalla++;
     }
@@ -148,6 +210,7 @@ function mousePressed() {
     // FINAL TRÁGICO
     if (areaDelBoton(400, 380, 180, 40)){
       pantalla = 10;
+      tiempoInicioFinal = millis();
     }
   // Ruta diario
   } else if (pantalla == 5) {
@@ -158,17 +221,24 @@ function mousePressed() {
   } else if (pantalla == 6) {
     if (areaDelBoton(320, 380, 180, 40)){
       pantalla = 9;
+      tiempoInicioFinal = millis();
     }
   // FINAL CLÁSICO
   } else if (pantalla == 8){
     if (areaDelBoton(320, 380, 180, 40)){
       pantalla = 11;
-       tiempoPantalla11 = millis(); // guardamos el momento que llegamos a la pantalla 11
-       tiempoFrameFinal3 = millis();
-    }
+      tiempoInicioFinal = millis();
+      
+    
+   }
   }
+  else if (pantalla==12){
+  if (areaDelBoton(600, 380, 180, 40)){
+      pantalla = -1;
+      MovY=0;
 }
-
+}
+}
 function areaDelBoton(x, y, w, h) {
   return mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h;
 }
