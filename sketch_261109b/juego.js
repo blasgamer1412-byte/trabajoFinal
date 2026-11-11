@@ -1,22 +1,21 @@
 class Juego {
 
-  constructor(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagenBoton) {
+  constructor(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagenCreditos, imagenBoton) {
     this.estado = "inicio";
     this.intentos = 6;
 
     this.fondo = fondo;
     this.fondo2 = fondo2;
-    this.inicioFondo = inicioFondo;
     this.imagenesOcultas = imagenesOcultas;
     this.imagenesEncontradas = imagenesEncontradas;
-    this.imagenVictoria = imagenVictoria;
-    this.imagenDerrota = imagenDerrota;
-    this.imagenBoton = imagenBoton;
 
-    this.botonX = 260;
-    this.botonY = 250;
-    this.botonAncho = 280;
-    this.botonAlto = 45;
+    this.inicio = new Pantalla (inicioFondo, new Boton(260, 250, 280, 45, imagenBoton, "Comenzar"), "Encontrá los objetos ocultos", 40, 120, [], 0, 0);
+
+    this.victoria = new Pantalla (imagenVictoria, new Boton(260, 250, 280, 45, imagenBoton, "Ver créditos"), "¡Ganaste!", 48, 120, ["Encontraste todos los objetos"], 180, 80);
+
+    this.derrota = new Pantalla (imagenDerrota, new Boton(260, 250, 280, 45, imagenBoton, "Ver créditos"), "Perdiste", 48, 120, ["Te quedaste sin intentos"], 180, 80);
+
+    this.creditos = new Pantalla (imagenCreditos, new Boton(260, 320, 280, 45, imagenBoton, "Volver al inicio"), "Créditos", 40, 60, ["ALUMNOS:", "Agorreca Celeste", "Blas Romero", "Comisión 2"], 120, 120);
 
     this.objetos = [];
     this.objetos[0] = new Objeto(60, 160, this.imagenesOcultas[0], this.imagenesEncontradas[0]);
@@ -27,23 +26,16 @@ class Juego {
 
   draw() {
     if (this.estado == "inicio") {
-      this.pantallaInicio();
+      this.inicio.mostrar();
     } else if (this.estado == "jugando") {
       this.pantallaJuego();
     } else if (this.estado == "victoria") {
-      this.pantallaVictoria();
+      this.victoria.mostrar();
     } else if (this.estado == "derrota") {
-      this.pantallaDerrota();
+      this.derrota.mostrar();
+    } else if (this.estado == "creditos") {
+      this.creditos.mostrar();
     }
-  }
-
-  pantallaInicio() {
-    image(this.inicioFondo, 0, 0, 800, 400);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(40);
-    text("Encontrá los objetos ocultos", width / 2, 120);
-    this.dibujarBoton("Comenzar");
   }
 
   pantallaJuego() {
@@ -60,50 +52,10 @@ class Juego {
     text("Intentos: " + this.intentos, 35, 40);
   }
 
-  pantallaVictoria() {
-    image(this.imagenVictoria, 0, 0, 800, 400);
-    fill(0, 0, 0, 80);
-    rect(0, 0, 800, 400);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(48);
-    text("¡Ganaste!", width / 2, 120);
-    textSize(20);
-    text("Encontraste todos los objetos", width / 2, 180);
-    this.dibujarBoton("Jugar de nuevo");
-  }
-
-  pantallaDerrota() {
-    image(this.imagenDerrota, 0, 0, 800, 400);
-    fill(0, 0, 0, 80);
-    rect(0, 0, 800, 400);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(48);
-    text("Perdiste", width / 2, 120);
-    textSize(20);
-    text("Te quedaste sin intentos", width / 2, 180);
-    this.dibujarBoton("Reintentar");
-  }
-
-  dibujarBoton(texto) {
-    image(this.imagenBoton, this.botonX, this.botonY, this.botonAncho, this.botonAlto);
-
-    fill(0);
-    textAlign(CENTER, CENTER);
-    textSize(20);
-    text(texto, this.botonX + this.botonAncho / 2, this.botonY + this.botonAlto / 2);
-  }
-
-  areaDelBoton() {
-    return mouseX > this.botonX && mouseX < this.botonX + this.botonAncho && mouseY > this.botonY && mouseY < this.botonY + this.botonAlto;
-  }
-
-
   mousePressed() {
     if (this.estado == "inicio") {
 
-      if (this.areaDelBoton()) {
+      if (this.inicio.botonPresionado()) {
         this.estado = "jugando";
       }
 
@@ -111,10 +63,24 @@ class Juego {
 
       this.clickEnJuego();
 
-    } else {
-      if (this.areaDelBoton()) {
+    } else if (this.estado == "victoria") {
+
+      if (this.victoria.botonPresionado()) {
+        this.estado = "creditos";
+      }
+
+    } else if (this.estado == "derrota") {
+
+      if (this.derrota.botonPresionado()) {
+        this.estado = "creditos";
+      }
+
+    } else if (this.estado == "creditos") {
+
+      if (this.creditos.botonPresionado()) {
         this.reiniciar();
       }
+
     }
   }
 
