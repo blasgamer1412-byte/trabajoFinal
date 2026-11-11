@@ -22,15 +22,15 @@ class Objeto {
 
   }
 
-  revisarClick(mx, my) {
+revisarClick(mx, my) {
 
-    if (mx > this.x && mx < this.x + 50 &&
-        my > this.y && my < this.y + 50) {
+  if (mx > this.x && mx < this.x + 50 &&
+      my > this.y && my < this.y + 50) {
 
-      this.encontrado = true;
-
-    }
+    this.encontrado = true;
+    return true;
 
   }
-
+  return false;
+}
 }
