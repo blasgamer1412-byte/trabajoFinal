@@ -1,6 +1,6 @@
 class Juego {
 
-  constructor(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagenCreditos, imagenBoton) {
+  constructor(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagenCreditos, imagenBoton, imagenInstrucciones) {
     this.estado = "inicio";
     this.intentos = 6;
 
@@ -9,7 +9,9 @@ class Juego {
     this.imagenesOcultas = imagenesOcultas;
     this.imagenesEncontradas = imagenesEncontradas;
 
-    this.inicio = new Pantalla (inicioFondo, new Boton(260, 250, 280, 45, imagenBoton, "Comenzar"), "Encontrá los objetos ocultos", 40, 120, [], 0, 0);
+    this.inicio = new Pantalla (inicioFondo, new Boton(260, 250, 280, 45, imagenBoton, "Iniciar juego"), "Encontrá los objetos ocultos", 40, 120, [], 0, 0);
+
+    this.instrucciones = new Pantalla (imagenInstrucciones, new Boton(260, 320, 280, 45, imagenBoton, "Comenzar"), "Instrucciones", 40, 80, ["Encuentra los objetos mostrados en pantalla antes de los 6 intentos"], 120, 0);
 
     this.victoria = new Pantalla (imagenVictoria, new Boton(260, 250, 280, 45, imagenBoton, "Ver créditos"), "¡Ganaste!", 48, 120, ["Encontraste todos los objetos"], 180, 80);
 
@@ -27,16 +29,18 @@ class Juego {
   draw() {
     if (this.estado == "inicio") {
       this.inicio.mostrar();
-    } else if (this.estado == "jugando") {
+  } else if (this.estado == "instrucciones") {
+      this.instrucciones.mostrar();
+  } else if (this.estado == "jugando") {
       this.pantallaJuego();
-    } else if (this.estado == "victoria") {
+  } else if (this.estado == "victoria") {
       this.victoria.mostrar();
-    } else if (this.estado == "derrota") {
+  } else if (this.estado == "derrota") {
       this.derrota.mostrar();
-    } else if (this.estado == "creditos") {
+  } else if (this.estado == "creditos") {
       this.creditos.mostrar();
-    }
   }
+}
 
   pantallaJuego() {
     image(this.fondo, 0, 0, 700, 400);
@@ -56,6 +60,11 @@ class Juego {
     if (this.estado == "inicio") {
 
       if (this.inicio.botonPresionado()) {
+        this.estado = "instrucciones";
+      }
+
+    } else if (this.estado == "instrucciones") {
+      if (this.instrucciones.botonPresionado()) {
         this.estado = "jugando";
       }
 
