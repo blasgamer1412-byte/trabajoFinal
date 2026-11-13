@@ -1,4 +1,14 @@
+/*
+TP FINAL PARTE 2
+IPMWI - COMISIÓN 2
+ALUMNOS:
+Celeste Geraldine Agorreca
+Blas Romero
+Video explicativo:
+*/
+
 let juego;
+
 let inicioFondo;
 let fondo;
 let fondo2;
@@ -9,6 +19,8 @@ let imagenDerrota;
 let imagenBoton;
 let imagencreditos;
 let imagenInstrucciones;
+
+let musicaFondo;
 
 function preload() {
   inicioFondo = loadImage("assets/menu.jpg");
@@ -29,11 +41,13 @@ function preload() {
   imagenesEncontradas[1] = loadImage("assets/objetos_encontrados/mono.png");
   imagenesEncontradas[2] = loadImage("assets/objetos_encontrados/juez.png");
   imagenesEncontradas[3] = loadImage("assets/objetos_encontrados/papeles.png");
+
+  musicaFondo = loadSound("assets/sonido/musicaFondo.mp3");
 }
 
 function setup() {
   createCanvas(800, 400);
-  juego = new Juego(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagencreditos, imagenBoton, imagenInstrucciones);
+  juego = new Juego(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagencreditos, imagenBoton, imagenInstrucciones, musicaFondo);
 }
 
 function draw() {
@@ -41,5 +55,8 @@ function draw() {
 }
 
 function mousePressed() {
+  if (!musicaFondo.isPlaying()) {
+    musicaFondo.loop();
+  }
   juego.mousePressed();
 }
