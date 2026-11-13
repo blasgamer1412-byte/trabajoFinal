@@ -8,6 +8,7 @@ let imagenVictoria;
 let imagenDerrota;
 let imagenBoton;
 let imagencreditos;
+let imagenInstrucciones;
 
 function preload() {
   inicioFondo = loadImage("assets/menu.jpg");
@@ -17,6 +18,7 @@ function preload() {
   imagenDerrota = loadImage("assets/derrota.jpg");
   imagencreditos = loadImage("assets/creditos.jpg");
   imagenBoton = loadImage("assets/boton.png");
+  imagenInstrucciones = loadImage("assets/instrucciones.jpg");
 
   imagenesOcultas[0] = loadImage("assets/objetos_ocultos/barco.png");
   imagenesOcultas[1] = loadImage("assets/objetos_ocultos/mono.png");
@@ -31,7 +33,7 @@ function preload() {
 
 function setup() {
   createCanvas(800, 400);
-  juego = new Juego(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagencreditos, imagenBoton);
+  juego = new Juego(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagencreditos, imagenBoton, imagenInstrucciones);
 }
 
 function draw() {
