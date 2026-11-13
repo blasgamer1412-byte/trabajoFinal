@@ -1,6 +1,6 @@
 class Juego {
 
-  constructor(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagenCreditos, imagenBoton, imagenInstrucciones) {
+  constructor(fondo, fondo2, inicioFondo, imagenesOcultas, imagenesEncontradas, imagenVictoria, imagenDerrota, imagenCreditos, imagenBoton, imagenInstrucciones, musicaFondo) {
     this.estado = "inicio";
     this.intentos = 6;
 
@@ -8,6 +8,8 @@ class Juego {
     this.fondo2 = fondo2;
     this.imagenesOcultas = imagenesOcultas;
     this.imagenesEncontradas = imagenesEncontradas;
+
+    this.musicaFondo = musicaFondo;
 
     this.inicio = new Pantalla (inicioFondo, new Boton(260, 250, 280, 45, imagenBoton, "Iniciar juego"), "Encontrá los objetos ocultos", 40, 120, [], 0, 0);
 
@@ -43,8 +45,8 @@ class Juego {
 }
 
   pantallaJuego() {
-    image(this.fondo, 0, 0, 700, 400);
-    image(this.fondo2, 700, 0, 100, 400);
+    image(this.fondo, 0, 0);
+    image(this.fondo2, 700, 0);
 
     for (let i = 0; i < this.objetos.length; i++) {
       this.objetos[i].mostrar();
